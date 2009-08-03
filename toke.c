@@ -10787,6 +10787,11 @@ S_scan_word(pTHX_ register char *s, char *dest, STRLEN destlen, int allow_packag
 	    d += len;
 	    s = t;
 	}
+	else if (s[0] == '?') {
+	    *d++ = *s++;
+	    *slp = d - dest;
+	    return s;
+	}
 	else {
 	    *d = '\0';
 	    *slp = d - dest;
