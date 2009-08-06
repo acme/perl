@@ -10,7 +10,7 @@ BEGIN {
     require "test.pl";
 }
 
-print "1..79\n";
+print "1..81\n";
 
 @A::ISA = 'B';
 @B::ISA = 'C';
@@ -50,8 +50,14 @@ is($obj->method, "method");
 is($obj->$mname, "method");
 is(method $obj, "method");
 
+package Pack;
 sub Pack::is_method? { shift; join(",", "is_method?", @_) }
+sub Pack::is_method2? { shift; join(",", "is_method2?", @_) }
+sub Pack::is_function? { return is_method?(1, 2, 3) }
+package main;
 is(Pack->is_method?("a","b","c"), "is_method?,a,b,c");
+is(Pack->is_method2?("a","b","c"), "is_method2?,a,b,c");
+is(Pack->is_function?("a","b","c"), "is_method?,2,3");
 
 is( A->d, "C::d");		# Update hash table;
 
